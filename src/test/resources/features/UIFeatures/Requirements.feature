@@ -1,4 +1,3 @@
-@int
 Feature: Developer Requirements
 
   Background:

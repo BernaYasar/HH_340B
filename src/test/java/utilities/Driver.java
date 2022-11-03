@@ -17,8 +17,6 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 public abstract class Driver {
-//My Driver class is abstract so I do not create an object of this class
-//TestBase class is also abstract
 
     private static int timeout = 5;
     private Driver(){
@@ -43,15 +41,12 @@ public abstract class Driver {
                     break;
 
                 case "chrome-headless":
-//                    WebDriverManager.chromedriver().setup();
-//                    driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("headless");
                     options.addArguments("disable-gpu");
                     driver = new ChromeDriver(options);
                     break;
-
             }
         }
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -80,8 +75,6 @@ public abstract class Driver {
         }
     }
 
-
-
     public static void waitAndSendText(WebElement element,String text, int timeout) {
         for (int i = 0; i < timeout; i++) {
             try {
@@ -92,6 +85,7 @@ public abstract class Driver {
             }
         }
     }
+
     public static void waitAndSendText(WebElement element,String text) {
         for (int i = 0; i < timeout; i++) {
             try {
@@ -102,6 +96,7 @@ public abstract class Driver {
             }
         }
     }
+
     public static void waitAndSendTextWithDefaultTime(WebElement element,String text) {
         for (int i = 0; i < timeout; i++) {
             try {
@@ -126,12 +121,6 @@ public abstract class Driver {
         return null;
     }
 
-
-    //Webdriver
-    //ChromeDriver
-    //Iedriver
-    //FirefoxDriver
-
     public static void wait2(int sec){
         try {
             Thread.sleep(1000*sec);
@@ -148,7 +137,7 @@ public abstract class Driver {
         }
 
     }
-    //5 seconds
+
     public static void waitAndClickElement(WebElement element , int seconds){
         for (int i = 0; i < seconds ; i++) {
 
@@ -158,8 +147,6 @@ public abstract class Driver {
             }catch (Exception e){
                 wait2(1);
             }
-
-
         }
     }
 
@@ -171,8 +158,6 @@ public abstract class Driver {
     }
 
     public static void wait(int secs) {
-
-
         try {
             Thread.sleep(1000 * secs);
         } catch (InterruptedException e) {
@@ -192,22 +177,27 @@ public abstract class Driver {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeToWaitInSec);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
+
     public static WebElement waitForVisibility(By locator, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
     public static Boolean waitForInVisibility(By locator, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
+
     public static WebElement waitForClickablility(WebElement element, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+
     public static WebElement waitForClickablility(By locator, int timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
+
     public static void waitForPageToLoad(long timeOutInSeconds) {
         ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
@@ -236,24 +226,13 @@ public abstract class Driver {
                 break;
             }
         }
-
     }
 
-    /**
-     * Clicks on an element using JavaScript
-     *
-     * @param element
-     */
     public static void clickWithJS(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
 
-    /**
-     * Clicks on an element using JavaScript
-     *
-     * @param elements
-     */
     public static void clickWithJSAsList(List<WebElement> elements) {
         for (WebElement each : elements) {
             ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", waitForVisibility(each,5));
@@ -261,11 +240,6 @@ public abstract class Driver {
         }
     }
 
-    /**
-     * Performs double click action on an element
-     *
-     * @param element
-     */
     public static void doubleClick(WebElement element) {
         new Actions(Driver.getDriver()).doubleClick(element).build().perform();
     }
